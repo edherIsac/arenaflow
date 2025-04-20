@@ -20,6 +20,11 @@
 - Administración de Equipos y Jugadores
 - Calendario de Partidos
 - Resultados y Estadísticas en Tiempo Real
+- Generación de Credenciales Digitales y Físicas para:
+  - Jugadores
+  - Entrenadores y Cuerpo Técnico
+  - Árbitros
+  - Directivos y Personal de la Liga
 - Roles y Permisos (Admin, Árbitros, Delegados, Jugadores)
 - Notificaciones Push (Flutter + Firebase)
 - Dashboard de Administración (Angular)

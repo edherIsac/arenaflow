@@ -1,0 +1,29 @@
+.qodo
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Dependency directories
+node_modules/
+
+# Build directories
+dist/
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

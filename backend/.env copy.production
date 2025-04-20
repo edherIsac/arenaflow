@@ -1,0 +1,13 @@
+# Configuración de producción
+NODE_ENV=production
+MONGODB_URI=mongodb://localhost/league
+JWT_SECRET=123.Hola.+-
+PORT=3000
+
+# Configuración de CORS (opcional)
+CORS_ORIGIN=
+CORS_METHODS=GET,HEAD,PUT,PATCH,POST,DELETE
+
+# Configuración de rate limiting (opcional)
+THROTTLE_TTL=60
+THROTTLE_LIMIT=100

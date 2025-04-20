@@ -1,0 +1,5 @@
+PORT=3000
+PASSPORT_JWT_PASSWORD=123.Hola.+-
+MONGODB_URI=mongodb://localhost/league
+NODE_ENV=development # o 'production' según el entorno
+

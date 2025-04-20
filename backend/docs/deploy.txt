@@ -1,0 +1,1 @@
+pm2 start main.js --name="chatLibre" --interpreter=/root/.nvm/versions/node/v16.18.1/bin/node

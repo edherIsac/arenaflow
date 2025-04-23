@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 export type GroupDocument = Group & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Group {
   @Prop({ required: true })
   name: string; // Grupo A, Grupo B, Grupo C, Grupo D
@@ -19,9 +19,6 @@ export class Group {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Team' }], required: true })
   teams: Types.ObjectId[];
-
-  @Prop({ required: true })
-  dateAt: Date;
 
   @Prop({ default: true }) // Por defecto, los equipos estarán activos
   isActive: boolean;

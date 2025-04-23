@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type PlayerDocument = Player & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Player {
   @Prop({ required: true })
   fullName: string;
@@ -16,9 +16,6 @@ export class Player {
 
   @Prop({ required: true })
   birthDate: Date;
-
-  @Prop({ required: true })
-  dateAt: Date;
 
   @Prop({ default: true }) // Por defecto, los jugadores estarán activos
   isActive: boolean;

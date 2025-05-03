@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Group, GroupDocument } from 'src/core/models/schemas/group.schema';
 import { CreateGroupDto } from './create-group.dto';
 import { UpdateGroupDto } from './update-group.dto';
@@ -36,14 +36,21 @@ export class GroupService {
       .exec();
   }
 
-  async update(id: string, updateGroupDto: UpdateGroupDto): Promise<Group> {
-    return this.groupModel
-      .findByIdAndUpdate(id, updateGroupDto, { new: true })
-      .populate('league')
-      .populate('season')
-      .populate('category')
-      .populate('teams')
-      .exec();
+  async updateGroup(
+    groupId: string,
+    updateData: UpdateGroupDto,
+  ): Promise<GroupDocument> {
+    const group = await this.groupModel.findById(groupId);
+    if (!group) throw new NotFoundException('Grupo no encontrado');
+
+    // Actualiza solo los campos proporcionados
+    Object.keys(updateData).forEach((key) => {
+      if (updateData[key] !== undefined) {
+        group[key] = updateData[key];
+      }
+    });
+
+    return group.save();
   }
 
   async remove(id: string): Promise<Group> {
@@ -78,5 +85,39 @@ export class GroupService {
       .populate('category')
       .populate('teams')
       .exec();
+  }
+
+  async addTeamsToGroup(
+    groupId: string,
+    teamIds: string[],
+  ): Promise<GroupDocument> {
+    const group = await this.groupModel.findById(groupId);
+    if (!group) throw new NotFoundException('Grupo no encontrado');
+
+    // Convertir a ObjectId y evitar duplicados
+    const newTeams = teamIds
+      .map((id) => new Types.ObjectId(id))
+      .filter((id) => !group.teams.some((existingId) => existingId.equals(id)));
+
+    group.teams.push(...newTeams);
+    return group.save();
+  }
+
+  async removeTeamFromGroup(
+    groupId: string,
+    teamId: string,
+  ): Promise<GroupDocument> {
+    const group = await this.groupModel.findById(groupId);
+    if (!group) throw new NotFoundException('Grupo no encontrado');
+
+    // Convertir a ObjectId para comparación
+    const teamObjectId = new Types.ObjectId(teamId);
+
+    // Filtrar el equipo a eliminar
+    group.teams = group.teams.filter(
+      (existingId) => !existingId.equals(teamObjectId),
+    );
+
+    return group.save();
   }
 }

@@ -5,6 +5,8 @@ export type GroupDocument = Group & Document;
 
 @Schema({ timestamps: true })
 export class Group {
+  _id: Types.ObjectId; // Solo como referencia para manejar las lecturas del modelo y el tipado
+
   @Prop({ required: true })
   name: string; // Grupo A, Grupo B, Grupo C, Grupo D
 

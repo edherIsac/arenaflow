@@ -1,0 +1,23 @@
+[
+  {
+    "fullName": "Jugador 1",
+    "ineKey": "INE$(date +%s)1",
+    "curp": "CURP$(date +%s | md5sum | head -c 13)1",
+    "birthDate": "1990-01-01",
+    "isActive": true
+  },
+  {
+    "fullName": "Jugador 2",
+    "ineKey": "INE$(date +%s)2",
+    "curp": "CURP$(date +%s | md5sum | head -c 13)2",
+    "birthDate": "1990-01-01",
+    "isActive": true
+  },
+  {
+    "fullName": "Jugador 3",
+    "ineKey": "INE$(date +%s)3",
+    "curp": "CURP$(date +%s | md5sum | head -c 13)3",
+    "birthDate": "1990-01-01",
+    "isActive": true
+  }
+]

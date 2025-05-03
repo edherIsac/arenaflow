@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   Query,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -22,6 +23,7 @@ import { GroupService } from './group.service';
 import { Group } from './group.swagger.schema';
 import { CreateGroupDto } from './create-group.dto';
 import { UpdateGroupDto } from './update-group.dto';
+import { AddTeamsDto } from '../teams/add-teams.dto';
 
 @ApiBearerAuth()
 @ApiTags('Groups')
@@ -109,7 +111,7 @@ export class GroupController {
     @Param('id') id: string,
     @Body() updateGroupDto: UpdateGroupDto,
   ) {
-    return this.groupService.update(id, updateGroupDto);
+    return this.groupService.updateGroup(id, updateGroupDto);
   }
 
   @Delete(':id')
@@ -125,5 +127,28 @@ export class GroupController {
   })
   async remove(@Param('id') id: string) {
     return this.groupService.remove(id);
+  }
+
+  @Patch(':groupId/teams')
+  @ApiOperation({ summary: 'Agregar equipos a un grupo' })
+  @ApiOkResponse({
+    description: 'The updated group',
+    type: Group,
+  })
+  async addTeams(@Param('groupId') groupId: string, @Body() dto: AddTeamsDto) {
+    return this.groupService.addTeamsToGroup(groupId, dto.teamIds);
+  }
+
+  @Delete(':groupId/teams/:teamId')
+  @ApiOperation({ summary: 'Eliminar equipo de un grupo' })
+  @ApiOkResponse({
+    description: 'El grupo actualizado',
+    type: Group,
+  })
+  async removeTeam(
+    @Param('groupId') groupId: string,
+    @Param('teamId') teamId: string,
+  ) {
+    return this.groupService.removeTeamFromGroup(groupId, teamId);
   }
 }

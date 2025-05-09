@@ -1,0 +1,33 @@
+<!-- Navbar superior -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/home" class="logo">ArenaFlow</a>
+  </div>
+  <div class="navbar-menu">
+    <a routerLink="/home" routerLinkActive="active" class="nav-item">Inicio</a>
+    <a routerLink="/teams" routerLinkActive="active" class="nav-item">Equipos</a>
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">Dashboard</a>
+    <a routerLink="/profile" routerLinkActive="active" class="nav-item">Perfil</a>
+  </div>
+</nav>
+
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="main-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a routerLink="/home" routerLinkActive="active"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a routerLink="/teams" routerLinkActive="active"><i class="fas fa-users-gear"></i> Equipos</a></li>
+        <li><a routerLink="/stats" routerLinkActive="active"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+        <li><a routerLink="/calendar" routerLinkActive="active"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
+        <li><a routerLink="/settings" routerLinkActive="active"><i class="fas fa-cog"></i> Configuración</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

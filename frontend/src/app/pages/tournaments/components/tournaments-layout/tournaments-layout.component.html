@@ -1,0 +1,43 @@
+<div class="tournaments-layout">
+    <!-- Header con perfil -->
+    <header class="header">
+        <!-- <div class="search-bar">
+            <input type="text" placeholder="Buscar torneos..." [(ngModel)]="searchQuery" (input)="onSearch()">
+        </div> -->
+        <h2>Mis torneos</h2>
+        <div class="profile-menu" (click)="toggleProfileMenu()" [class.active]="isProfileMenuOpen">
+            <div class="profile-info">
+                <span class="username">{{ username }}</span>
+                <img [src]="userPhotoUrl" alt="Foto de perfil" class="profile-photo">
+            </div>
+            <div class="dropdown-menu" *ngIf="isProfileMenuOpen">
+                <a routerLink="/profile" class="menu-item">
+                    <i class="fas fa-user"></i>
+                    Mi Perfil
+                </a>
+                <!-- <a routerLink="/tournaments" class="menu-item">
+                    <i class="fas fa-trophy"></i>
+                    Mis Torneos
+                </a> -->
+                <a routerLink="/players/admin" class="menu-item">
+                    <i class="fas fa-user"></i>
+                    Mis Jugadores
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    Configuración
+                </a>
+                <div class="divider"></div>
+                <a routerLink="/login" class="menu-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

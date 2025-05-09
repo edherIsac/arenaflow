@@ -1,0 +1,153 @@
+.tournaments-list {
+    // background: rgba(255,255,255,0.93);
+    border-radius: 16px;
+    // box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+    padding: 0 2rem 2rem 2rem;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    // margin-top: 2.5rem;
+    color: #222;
+    // max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+
+    .filters {
+        display: flex;
+        margin-bottom: 2.2rem;
+        
+        .search-bar {
+            width: 100%;
+            max-width: 350px;
+            
+            input {
+                width: 100%;
+                padding: 0.85rem 1rem;
+                border-radius: 8px;
+                border: 1.5px solid #e3e3e3;
+                font-size: 1.08rem;
+                font-family: inherit;
+                background: #f7f7fc;
+                transition: border-color 0.2s, box-shadow 0.2s;
+                color: #283046;
+                font-weight: 500;
+                outline: none;
+                box-shadow: none;
+
+                &::placeholder {
+                    color: #b0b0b0;
+                }
+
+                &:focus {
+                    border-color: #b243ce;
+                    background: #f3f4fa;
+                    box-shadow: 0 2px 8px rgba(80,0,150,0.10);
+                }
+            }
+        }
+    }
+
+    .tournaments-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 2rem;
+        // max-height: 70vh;
+        // overflow-y: auto;
+        // overflow-x: hidden;
+        padding-bottom: 1rem;
+        // scrollbar-width: thin;
+        // scrollbar-color: #b243ce #e3e3e3;
+    }
+
+    /* Scrollbar para navegadores Webkit */
+    // .tournaments-grid::-webkit-scrollbar {
+    //     width: 10px;
+    //     background: #e3e3e3;
+    //     border-radius: 8px;
+    // }
+    // .tournaments-grid::-webkit-scrollbar-thumb {
+    //     background: #b243ce;
+    //     border-radius: 8px;
+    // }
+
+    .tournament-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 6px 24px rgba(78, 145, 216, 0.13);
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+
+            .status {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                padding: 0.5rem 1.1rem;
+                border-radius: 20px;
+                background: #f4f6fb;
+                color: #4e91d8;
+                font-weight: 600;
+                font-size: 0.97rem;
+                box-shadow: 0 1px 4px rgba(78, 145, 216, 0.11);
+                text-transform: capitalize;
+            }
+        }
+
+        .card-content {
+            padding: 1.3rem 1.2rem 1.1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-family: inherit;
+
+            h3 {
+                font-size: 1.25rem;
+                font-weight: 700;
+                color: #283046;
+                margin: 0 0 0.15rem 0;
+            }
+            .description {
+                font-size: 0.98rem;
+                color: #5a5a5a;
+                margin-bottom: 0.3rem;
+            }
+            .details {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.93rem;
+                color: #7b809a;
+                margin-bottom: 0.5rem;
+            }
+            .btn-join {
+                background: linear-gradient(90deg, #4e91d8 0%, #b243ce 100%);
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                padding: 0.65rem 1.2rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background 0.2s, box-shadow 0.2s;
+                box-shadow: 0 1px 6px rgba(78, 145, 216, 0.10);
+
+                &:hover {
+                    background: linear-gradient(90deg, #b243ce 0%, #4e91d8 100%);
+                }
+                &:disabled {
+                    background: #e6e6e6;
+                    color: #b0b0b0;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

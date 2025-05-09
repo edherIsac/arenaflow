@@ -1,0 +1,36 @@
+<div class="tournaments-list">
+    <!-- Barra de búsqueda -->
+    <div class="filters">
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar torneos..." [(ngModel)]="searchQuery" (input)="onSearch()">
+        </div>
+    </div>
+
+    <!-- Grid de torneos -->
+    <div class="tournaments-grid">
+        <div class="tournament-card" *ngFor="let tournament of filteredTournaments">
+            <div class="card-image" [style.backgroundImage]="'url(' + tournament.imageUrl + ')'">
+                <span class="status" [class]="tournament.status">{{ tournament.status }}</span>
+            </div>
+            <div class="card-content">
+                <h3>{{ tournament.name }}</h3>
+                <p class="description">{{ tournament.description }}</p>
+                <div class="details">
+                    <span class="date">
+                        <i class="fas fa-calendar"></i>
+                        {{ tournament.date | date:'shortDate' }}
+                    </span>
+                    <span class="participants">
+                        <i class="fas fa-users"></i>
+                        {{ tournament.participants }}/{{ tournament.maxParticipants }}
+                    </span>
+                </div>
+                <button class="btn-join" 
+                        [disabled]="tournament.status === 'finished'"
+                        (click)="onJoinTournament(tournament)">
+                    {{ tournament.status === 'finished' ? 'Finalizado' : 'Unirse' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

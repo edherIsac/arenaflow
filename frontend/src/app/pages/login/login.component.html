@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-container">
+        <img src="../../../assets/iconos/Designer.png" alt="Logo" class="logo">
+      </div>
+      <h1>ArenaFlow</h1>
+      <h2>Acceso al Sistema</h2>
+      <p>Ingresa tus credenciales</p>
+    </div>
+    <form (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" required placeholder="Correo electrónico">
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required placeholder="Contraseña">
+      </div>
+      <div class="login-actions">
+        <button type="submit" class="btn-login">
+          <span>Iniciar Sesión</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+      </div>
+    </form>
+    <div class="login-footer">
+      <p>Sistema de acceso restringido</p>
+    </div>
+  </div>
+</div>

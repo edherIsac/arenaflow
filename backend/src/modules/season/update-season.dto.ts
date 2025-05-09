@@ -1,4 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateSeasonDto } from './create-season.dto';
 
-export class UpdateSeasonDto extends PartialType(CreateSeasonDto) {}
+export class UpdateSeasonDto extends PartialType(CreateSeasonDto) {
+  startDate: Date;
+  endDate: Date;
+}

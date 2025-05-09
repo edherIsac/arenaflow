@@ -2,13 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type LeagueDocument = League & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class League {
-  @Prop()
-  name: string;
-
   @Prop({ required: true })
-  dateAt: Date;
+  name: string;
 
   @Prop({ default: true }) // Por defecto, los jugadores estarán activos
   isActive: boolean;

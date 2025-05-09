@@ -14,7 +14,6 @@ export class PlayerService {
   async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
     const createdPlayer = new this.playerModel({
       ...createPlayerDto,
-      dateAt: createPlayerDto.dateAt || new Date(),
       isActive:
         createPlayerDto.isActive !== undefined
           ? createPlayerDto.isActive

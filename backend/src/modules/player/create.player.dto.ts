@@ -43,15 +43,6 @@ export class CreatePlayerDto {
   birthDate: Date;
 
   @ApiProperty({
-    description: 'Fecha de registro',
-    example: '2023-01-01',
-    default: new Date().toISOString().split('T')[0],
-  })
-  @IsDateString()
-  @IsOptional()
-  dateAt?: Date;
-
-  @ApiProperty({
     description: 'Indica si el jugador está activo',
     example: true,
     default: true,

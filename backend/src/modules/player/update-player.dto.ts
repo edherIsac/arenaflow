@@ -41,15 +41,6 @@ export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   birthDate?: Date;
 
   @ApiProperty({
-    description: 'Fecha de registro',
-    example: '2023-01-01',
-    required: false,
-  })
-  @IsDateString()
-  @IsOptional()
-  dateAt?: Date;
-
-  @ApiProperty({
     description: 'Indica si el jugador está activo',
     example: true,
     required: false,

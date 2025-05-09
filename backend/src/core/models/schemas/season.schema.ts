@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 export type SeasonDocument = Season & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Season {
   @Prop({ required: true, type: Types.ObjectId, ref: 'Liga' })
   league: string;
@@ -12,13 +12,10 @@ export class Season {
   name: string;
 
   @Prop({ required: true })
-  inicio: Date;
+  startDate: Date;
 
   @Prop({ required: true })
-  fin: Date;
-
-  @Prop({ required: true })
-  dateAt: Date;
+  endDate: Date;
 
   @Prop({ default: true }) // Por defecto, los jugadores estarán activos
   isActive: boolean;

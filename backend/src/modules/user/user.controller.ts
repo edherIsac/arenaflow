@@ -5,6 +5,7 @@ import {
   Put,
   Param,
   Get,
+  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -74,5 +75,18 @@ export class UserController {
   })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Eliminar un usuario' })
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    required: true,
+    description: 'ID del usuario a eliminar',
+  })
+  delete(@Param('id') id: string) {
+    return this.userService.delete(id);
   }
 }

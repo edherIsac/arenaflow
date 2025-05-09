@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
-  IsDate,
+  IsMongoId,
   IsNotEmpty,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -48,16 +48,9 @@ export class CreateGroupDto {
   })
   @IsArray()
   @IsString({ each: true })
+  @IsMongoId({ each: true })
+  @IsOptional()
   teams: string[];
-
-  @ApiProperty({
-    description: 'Date for the group',
-    example: '2023-12-31',
-  })
-  @IsNotEmpty()
-  @IsDate()
-  @Type(() => Date)
-  dateAt: Date;
 
   @ApiProperty({
     description: 'Whether the group is active',
@@ -65,5 +58,6 @@ export class CreateGroupDto {
     required: false,
   })
   @IsBoolean()
+  @IsOptional()
   isActive?: boolean;
 }

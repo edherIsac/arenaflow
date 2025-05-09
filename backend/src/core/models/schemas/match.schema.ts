@@ -20,7 +20,7 @@ export const JornadaSchema = SchemaFactory.createForClass(Jornada);
 
 export type MatchDocument = Match & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Match {
   @Prop({ type: Types.ObjectId, ref: 'SeaGroupson', required: true })
   group: Types.ObjectId;

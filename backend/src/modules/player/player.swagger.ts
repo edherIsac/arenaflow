@@ -7,14 +7,11 @@ export class Player {
   })
   id: string;
 
-  @ApiProperty({ description: 'Nombre del jugador', example: 'Juan' })
-  firstName: string;
-
-  @ApiProperty({ description: 'Apellido del jugador', example: 'Pérez' })
-  lastName: string;
-
-  @ApiProperty({ description: 'Fecha de nacimiento', example: '1990-01-15' })
-  birthDate: Date;
+  @ApiProperty({
+    description: 'Nombre completo del jugador',
+    example: 'Juan Pérez López',
+  })
+  fullName: string;
 
   @ApiProperty({
     description: 'Clave INE del jugador',
@@ -24,24 +21,15 @@ export class Player {
 
   @ApiProperty({
     description: 'CURP del jugador',
-    example: 'PEMJ900115HDFRRN01',
+    // example: 'PEMJ900115HDFRRN01',
   })
   curp: string;
 
-  @ApiProperty({ description: 'Número de teléfono', example: '+521234567890' })
-  phoneNumber: string;
-
   @ApiProperty({
-    description: 'Correo electrónico',
-    example: 'juan.perez@example.com',
+    description: 'Fecha de nacimiento',
+    example: '1990-01-15',
   })
-  email: string;
-
-  @ApiProperty({ description: 'Posición preferida', example: 'Delantero' })
-  position: string;
-
-  @ApiProperty({ description: 'Número de camiseta', example: 10 })
-  jerseyNumber: number;
+  birthDate: Date;
 
   @ApiProperty({
     description: 'Indica si el jugador está activo',
@@ -64,18 +52,25 @@ export class Player {
 
 export class UpdatePlayerDto {
   @ApiProperty({
-    description: 'Nombre del jugador',
+    description: 'Nombre completo del jugador',
     required: false,
-    example: 'Juan',
+    example: 'Juan Pérez López',
   })
-  firstName?: string;
+  fullName?: string;
 
   @ApiProperty({
-    description: 'Apellido del jugador',
+    description: 'Clave INE del jugador',
     required: false,
-    example: 'Pérez',
+    example: 'ABCD1234567890',
   })
-  lastName?: string;
+  ineKey?: string;
+
+  @ApiProperty({
+    description: 'CURP del jugador',
+    required: false,
+    example: 'PEMJ900115HDFRRN01',
+  })
+  curp?: string;
 
   @ApiProperty({
     description: 'Fecha de nacimiento',
@@ -85,30 +80,9 @@ export class UpdatePlayerDto {
   birthDate?: Date;
 
   @ApiProperty({
-    description: 'Número de teléfono',
+    description: 'Indica si el jugador está activo',
     required: false,
-    example: '+521234567890',
+    example: true,
   })
-  phoneNumber?: string;
-
-  @ApiProperty({
-    description: 'Correo electrónico',
-    required: false,
-    example: 'juan.perez@example.com',
-  })
-  email?: string;
-
-  @ApiProperty({
-    description: 'Posición preferida',
-    required: false,
-    example: 'Delantero',
-  })
-  position?: string;
-
-  @ApiProperty({
-    description: 'Número de camiseta',
-    required: false,
-    example: 10,
-  })
-  jerseyNumber?: number;
+  isActive?: boolean;
 }

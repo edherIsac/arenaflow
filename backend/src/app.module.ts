@@ -16,7 +16,9 @@ import { PlayerModule } from './modules/player/player.module';
 import { VenuesModule } from './modules/venues/venues.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { MatchesResultsModule } from './modules/matches-results/matches-results.module';
+import { PenaltyModule } from './modules/penaltys/penalty.module';
 import { MsgGateway } from './core/common/msg.gateway';
+import { TeamsModule } from './modules/teams/teams.module';
 
 @Module({
   imports: [
@@ -62,10 +64,11 @@ import { MsgGateway } from './core/common/msg.gateway';
     SeasonModule,
     PlayerModule,
     VenuesModule,
+    TeamsModule,
     MatchesModule,
     MatchesResultsModule,
+    PenaltyModule,
   ],
-  controllers: [],
   providers: [MsgGateway],
 })
 export class AppModule {}

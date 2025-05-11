@@ -1,48 +1,56 @@
 import {
-  IsDate,
   IsNotEmpty,
+  IsMongoId,
+  IsDateString,
   IsBoolean,
-  ValidateNested,
   IsArray,
+  ValidateNested,
+  IsOptional,
+  Validate,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Jornada } from 'src/core/models/schemas/match.schema';
+import { Type } from 'class-transformer';
+import { IsDateAfter } from './is-date-after.validator';
+import { JornadaDto } from './jornada.dto';
 
 export class CreateMatchDto {
   @ApiProperty({
+    example: '507f1f77bcf86cd799439011',
     description: 'ID del grupo',
-    example: '60a7c1234f1a2b3c4d5e6789',
   })
+  @IsMongoId()
   @IsNotEmpty()
-  group: Types.ObjectId;
-
-  @ApiProperty({ description: 'Lista de jornadas', type: [Jornada] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Jornada)
-  jornadas: Jornada[];
+  group: string;
 
   @ApiProperty({
-    description: 'Fecha de inicio',
-    example: '2024-05-01T00:00:00.000Z',
-  })
-  @IsDate()
-  startDate: Date;
-
-  @ApiProperty({
-    description: 'Fecha de finalización',
-    example: '2024-06-01T00:00:00.000Z',
-  })
-  @IsDate()
-  endDate: Date;
-
-  @ApiProperty({
-    description: 'Estado del match',
-    example: true,
+    type: [JornadaDto],
+    description: 'Lista de jornadas (opcional)',
     required: false,
   })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => JornadaDto)
+  jornadas?: JornadaDto[];
+
+  @ApiProperty({
+    example: '2025-06-01T00:00:00Z',
+    description: 'Fecha de inicio en formato ISO',
+  })
+  @IsDateString()
+  @IsNotEmpty()
+  startDate: string;
+
+  @ApiProperty({
+    example: '2025-06-30T00:00:00Z',
+    description: 'Fecha de fin en formato ISO',
+  })
+  @IsDateString()
+  @IsNotEmpty()
+  @Validate(IsDateAfter, ['startDate'])
+  endDate: string;
+
+  @ApiProperty({ required: false, default: true })
   @IsBoolean()
-  isActive?: boolean;
+  isActive?: boolean = true;
 }

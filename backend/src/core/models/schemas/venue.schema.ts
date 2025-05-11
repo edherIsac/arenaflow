@@ -13,6 +13,20 @@ export class Venue {
 
   @Prop({ default: true })
   isActive: boolean;
+
+  @Prop({
+    type: {
+      type: String,
+      default: 'Point',
+    },
+    coordinates: {
+      type: [Number],
+    },
+  })
+  location?: {
+    type: string;
+    coordinates: number[];
+  };
 }
 
 export const VenueSchema = SchemaFactory.createForClass(Venue);

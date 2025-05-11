@@ -1,0 +1,112 @@
+<div class="team-form-page">
+  <div class="team-admin-header">
+    <h2>Administración de Equipos</h2>
+  </div>
+  <div class="team-form-card">
+    
+    <form
+      class="team-form"
+      [formGroup]="teamForm"
+      (ngSubmit)="onSubmit()"
+      enctype="multipart/form-data"
+    >
+      <div class="form-row">
+        
+        <div class="logo-upload-group">
+          <label for="logoInput" class="logo-label">
+            <div class="logo-preview">
+              <img [src]="logoPreview || defaultLogo" alt="Logo del equipo" />
+              <span class="edit-overlay"><i class="fa fa-camera"></i></span>
+            </div>
+          </label>
+          <input
+            id="logoInput"
+            type="file"
+            accept="image/*"
+            (change)="onLogoChange($event)"
+            hidden
+          />
+        </div>
+
+
+        <div class="fields-group">
+          <div class="form-group">
+            <label for="teamName">Nombre del Equipo</label>
+            <input
+              type="text"
+              id="teamName"
+              formControlName="name"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="teamCategory">Categoría</label>
+            <select
+              id="teamCategory"
+              formControlName="category"
+              class="form-control"
+            >
+              <option *ngFor="let cat of categories" [value]="cat">
+                {{ cat }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="btn-group">
+      <button type="submit" class="btn-primary" [disabled]="!teamForm.valid">
+        Guardar Equipo
+      </button>
+      <a routerLink="../admin" class="btn-secondary">Cancelar</a>
+    </div>
+
+  </div>
+
+  <div class="players-panel-wide">
+
+
+    <div class="players-panel-header">
+      <h3>Jugadores del equipo</h3>
+      <div class="players-actions">
+        <button class="btn-action add" (click)="onAddPlayer()"><i class="fa fa-user-plus"></i> Agregar Jugador</button>
+        <button class="btn-action export" (click)="onExportCredentials()"><i class="fa fa-id-card"></i> Exportar Credenciales</button>
+      </div>
+    </div>
+    <table class="players-table team-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Foto</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Posición</th>
+          <th class="actions-header">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <div class="player-photo">
+              <img [src]="player.foto || 'assets/img/person.jpg'" alt="Foto del jugador" />
+            </div>
+          </td>
+          <td>{{ player.nombre }}</td>
+          <td>{{ player.apellido }}</td>
+          <td>{{ player.posicion }}</td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="onEditPlayer(i)"><i class="fa fa-edit"></i></button>
+            <button class="btn-action delete" (click)="onDeletePlayer(i)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+        <tr *ngIf="players.length === 0">
+          <td colspan="6" class="no-players">No hay jugadores registrados</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

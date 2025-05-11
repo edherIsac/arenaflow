@@ -1,0 +1,98 @@
+<div class="player-form-page">
+  <div class="team-admin-header">
+    <h2>{{ isEditMode ? 'Editar Jugador' : 'Nuevo Jugador' }}</h2>
+  </div>
+
+  <div class="player-form-card">
+    <form class="player-form" [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input class="form-control" type="text" id="name" formControlName="name" placeholder="Nombre">
+          <div *ngIf="playerForm.get('name')?.invalid && playerForm.get('name')?.touched" class="error-message">
+            El nombre es requerido y debe tener al menos 3 caracteres
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Apellido</label>
+          <input class="form-control" type="text" id="lastName" formControlName="lastName" placeholder="Apellido">
+          <div *ngIf="playerForm.get('lastName')?.invalid && playerForm.get('lastName')?.touched" class="error-message">
+            El apellido es requerido y debe tener al menos 3 caracteres
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="team">Equipo</label>
+          <select class="form-control" id="team" formControlName="team">
+            <option value="">Seleccionar Equipo</option>
+            <option *ngFor="let team of teams" [value]="team">{{ team }}</option>
+          </select>
+          <div *ngIf="playerForm.get('team')?.invalid && playerForm.get('team')?.touched" class="error-message">
+            Debe seleccionar un equipo
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="position">Posición</label>
+          <select class="form-control" id="position" formControlName="position">
+            <option value="">Seleccionar Posición</option>
+            <option *ngFor="let position of positions" [value]="position">{{ position }}</option>
+          </select>
+          <div *ngIf="playerForm.get('position')?.invalid && playerForm.get('position')?.touched" class="error-message">
+            Debe seleccionar una posición
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="birthDate">Fecha de Nacimiento</label>
+          <input class="form-control" type="date" id="birthDate" formControlName="birthDate">
+          <div *ngIf="playerForm.get('birthDate')?.invalid && playerForm.get('birthDate')?.touched" class="error-message">
+            Debe ingresar una fecha de nacimiento
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="height">Altura (cm)</label>
+          <input class="form-control" type="number" id="height" formControlName="height" placeholder="Altura">
+          <div *ngIf="playerForm.get('height')?.invalid && playerForm.get('height')?.touched" class="error-message">
+            La altura debe estar entre 100 y 250 cm
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="weight">Peso (kg)</label>
+          <input class="form-control" type="number" id="weight" formControlName="weight" placeholder="Peso">
+          <div *ngIf="playerForm.get('weight')?.invalid && playerForm.get('weight')?.touched" class="error-message">
+            El peso debe estar entre 30 y 150 kg
+          </div>
+        </div>
+
+        <div class="form-group photo-upload-group">
+          <label>Foto del Jugador</label>
+          <div class="photo-preview" *ngIf="selectedImage">
+            <img [src]="selectedImage" alt="Vista previa de la foto">
+            <div class="edit-overlay">
+              <input type="file" id="photo" (change)="onImageSelected($event)" accept="image/*" style="display: none;">
+              <label for="photo" class="logo-label"><i class="fas fa-edit"></i></label>
+            </div>
+          </div>
+          <div *ngIf="!selectedImage">
+            <input type="file" id="photo" (change)="onImageSelected($event)" accept="image/*">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+        <button type="submit" class="btn-primary">{{ isEditMode ? 'Actualizar' : 'Crear' }} Jugador</button>
+      </div>
+    </form>
+  </div>
+</div>

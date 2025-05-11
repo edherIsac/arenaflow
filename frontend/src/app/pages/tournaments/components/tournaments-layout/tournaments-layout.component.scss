@@ -1,0 +1,117 @@
+.tournaments-layout {
+    min-height: 100vh;
+    width: 100%;
+    // background: linear-gradient(135deg, #4e91d8 0%, #b243ce 100%);
+    background-color: #7474d4;
+    color: #f7f7fc;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    position: relative;
+
+    .header {
+        // background: white;
+        padding: 1.5rem 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 0 0 18px 18px;
+        // box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #f7f7fc;
+            margin: 0;
+            text-shadow: 0 2px 8px rgba(80,0,150,0.12);
+        }
+
+        .profile-menu {
+            position: relative;
+            cursor: pointer;
+
+            .profile-info {
+                display: flex;
+                align-items: center;
+                gap: 1.1rem;
+
+                .username {
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    color: #fff;
+                    letter-spacing: 0.5px;
+                    text-shadow: 0 1px 6px rgba(80,0,150,0.14);
+                }
+
+                .profile-photo {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    // background-color: #b243ce;
+                    background: linear-gradient(135deg, #4e91d8 0%, #b243ce 100%);
+                    border: 2px solid #fff;
+                    box-shadow: 0 1px 6px rgba(80, 0, 150, 0.10);
+                }
+            }
+
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 0.5rem;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+                min-width: 210px;
+                z-index: 1000;
+                overflow: hidden;
+
+                .menu-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.85rem;
+                    padding: 0.85rem 1.3rem;
+                    color: #333;
+                    text-decoration: none;
+                    transition: background-color 0.18s;
+                    font-size: 1.04rem;
+
+                    i {
+                        width: 21px;
+                        text-align: center;
+                        color: #666;
+                    }
+
+                    &:hover {
+                        background: #f3f4fa;
+                    }
+
+                    &.logout {
+                        color: #dc3545;
+
+                        i {
+                            color: #dc3545;
+                        }
+
+                        &:hover {
+                            background: #fff5f5;
+                        }
+                    }
+                }
+
+                .divider {
+                    height: 1px;
+                    background: #e3e3e3;
+                    margin: 0.5rem 0;
+                }
+            }
+        }
+    }
+
+    .main-content {
+        padding: 2rem 4rem;
+        // max-width: 1200px;
+        // margin: 0 auto;
+    }
+}

@@ -1,0 +1,111 @@
+<div class="standings-table-wrapper">
+  <!-- Título principal -->
+  <div class="team-admin-header" style="margin: 0;">
+    <h2>Estadísticas</h2>
+  </div>
+
+  <!-- Selector de categoría -->
+  <div class="category-select-container" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+    <label for="category-select" style="font-weight: bold;">Categoría:</label>
+    <select id="category-select"
+            [(ngModel)]="selectedCategory"
+            (ngModelChange)="onCategoryChangeModel($event)"
+            class="category-select">
+      <option *ngFor="let cat of categories" [ngValue]="cat">{{ cat.name }}</option>
+    </select>
+  </div>
+
+  <!-- Tabs de grupos -->
+  <nav *ngIf="selectedCategory.groups.length > 1" class="group-tabnav" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; margin: 0;">
+    <button *ngFor="let group of selectedCategory.groups"
+            (click)="onGroupTabClick(group.name)"
+            [class.active]="selectedGroup.name === group.name"
+            class="group-tab">
+      {{ group.name }}
+    </button>
+  </nav>
+
+  <!-- Tabs de estadísticas (posiciones/goleo) -->
+  <nav class="statistics-tabs">
+    <button *ngFor="let tab of statisticsTabs"
+            (click)="setStatisticsTab(tab.key)"
+            [class.active]="selectedTab === tab.key">
+      {{ tab.label }}
+    </button>
+  </nav>
+
+  <!-- Contenido de la estadística seleccionada -->
+  <div *ngIf="selectedTab === 'standings'">
+    <!-- Tabla de posiciones -->
+    <div class="standings-container" style="margin: 0;">
+      <table class="standings-table" style="margin: 0;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Equipo</th>
+            <th>PJ</th>
+            <th>G</th>
+            <th>E</th>
+            <th>P</th>
+            <th>GF</th>
+            <th>GC</th>
+            <th>DG</th>
+            <th>PTS</th>
+            <th>Últimos 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of standings">
+            <td>{{ team.position }}</td>
+            <td class="team-info">
+              <img [src]="team.logo" [alt]="team.team" class="team-logo" />
+              <span class="team-name">{{ team.team }}</span>
+            </td>
+            <td>{{ team.played }}</td>
+            <td>{{ team.wins }}</td>
+            <td>{{ team.draws }}</td>
+            <td>{{ team.losses }}</td>
+            <td>{{ team.gf }}</td>
+            <td>{{ team.ga }}</td>
+            <td>{{ team.gd }}</td>
+            <td>{{ team.points }}</td>
+            <td>
+              <span *ngFor="let result of team.last5" [ngClass]="{
+                'result-win': result === 'W',
+                'result-draw': result === 'D',
+                'result-loss': result === 'L'
+              }">{{ getResultIcon(result) }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="selectedTab === 'scorers'" class="standings-container" style="margin: 0;">
+    <table class="standings-table" style="margin: 0;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Jugador</th>
+          <th>Equipo</th>
+          <th>Goles</th>
+          <th>PJ</th>
+          <th>Prom.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let scorer of scorers">
+          <td>{{ scorer.position }}</td>
+          <td class="team-info">
+            <span class="team-name">{{ scorer.name }}</span>
+          </td>
+          <td>{{ scorer.team }}</td>
+          <td>{{ scorer.goals }}</td>
+          <td>{{ scorer.matches }}</td>
+          <td>{{ scorer.avg }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

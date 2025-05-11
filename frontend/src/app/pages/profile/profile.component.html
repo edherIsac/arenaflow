@@ -1,0 +1,74 @@
+<div class="profile-container">
+  <!-- Botón para regresar a Mis Torneos -->
+  <div class="profile-nav">
+    <button class="btn-secondary" routerLink="/mis-torneos">
+      <i class="fas fa-arrow-left"></i> Mis Torneos
+    </button>
+  </div>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+    <div class="profile-header">
+      <label for="photo" class="profile-photo-label">
+        <img class="profile-photo" [src]="photoPreview || 'assets/iconos/Designer.png'" alt="Foto de perfil">
+        <input type="file" id="photo" (change)="onPhotoSelected($event)" accept="image/*" hidden>
+        <span class="photo-edit"><i class="fas fa-camera"></i></span>
+      </label>
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input id="name" formControlName="name" type="text" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input id="email" formControlName="email" type="email" class="form-control" required>
+      </div>
+    </div>
+    <!-- Información adicional del administrador -->
+    <div class="profile-info">
+      <h3>Información de la cuenta (Administrador)</h3>
+      <ul>
+        <li><strong>Fecha de registro:</strong> {{ registrationDate }}</li>
+        <li><strong>Torneos organizados:</strong> {{ tournamentsOrganized }}</li>
+        <li><strong>Participantes totales gestionados:</strong> {{ totalParticipantsManaged }}</li>
+      </ul>
+    </div>
+    <!-- Historial de torneos organizados -->
+    <div class="profile-history">
+      <h3>Torneos Administrados</h3>
+      <ul *ngIf="tournamentHistory.length > 0; else noTournaments">
+        <li *ngFor="let torneo of tournamentHistory">
+          <a [routerLink]="['/torneo', torneo.id]">{{ torneo.name }}</a> - {{ torneo.date | date:'mediumDate' }}<br>
+          <span class="small-text">Participantes: {{ torneo.participants }}</span>
+        </li>
+      </ul>
+      <ng-template #noTournaments>
+        <p>No has administrado ningún torneo aún.</p>
+      </ng-template>
+    </div>
+    <!-- Acciones administrativas rápidas -->
+    <div class="admin-actions">
+      <button class="btn-admin" (click)="onCreateTournament()">
+        <i class="fas fa-plus-circle"></i> Crear Torneo
+      </button>
+      <button class="btn-admin" (click)="onManageTournaments()">
+        <i class="fas fa-cogs"></i> Gestionar Torneos
+      </button>
+      <button class="btn-admin" (click)="onViewReports()">
+        <i class="fas fa-chart-bar"></i> Ver Reportes
+      </button>
+      <button class="btn-admin" (click)="onManageUsers()">
+        <i class="fas fa-users-cog"></i> Gestionar Usuarios
+      </button>
+    </div>
+    <!-- Cambiar contraseña -->
+    <div class="profile-actions">
+      <button type="submit" class="btn-primary" [disabled]="!profileForm.valid">
+        <i class="fas fa-save"></i> Guardar Cambios
+      </button>
+      <button type="button" class="btn-outline" (click)="onChangePassword()">
+        <i class="fas fa-key"></i> Cambiar Contraseña
+      </button>
+      <button type="button" class="btn-danger" (click)="onDeleteAccount()">
+        <i class="fas fa-trash"></i> Eliminar Cuenta
+      </button>
+    </div>
+  </form>
+</div>

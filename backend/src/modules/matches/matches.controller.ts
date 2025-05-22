@@ -20,6 +20,7 @@ import { MatchService } from './matches.service';
 import { CreateMatchDto } from './create-match.dto';
 import { Match } from 'src/core/models/schemas/match.schema';
 import { UpdateMatchDto } from './update-match.dto';
+import { UpdateJornadaDto } from './jornada.dto';
 
 @ApiTags('Matches') // Nombre de la categoría en Swagger
 @Controller('matches')
@@ -75,5 +76,35 @@ export class MatchController {
   @ApiResponse({ status: 404, description: 'Match no encontrado' })
   remove(@Param('id') id: string) {
     return this.matchService.remove(id);
+  }
+
+  @Patch(':matchId/jornadas/:jornadaIndex')
+  async updateJornada(
+    @Param('matchId') matchId: string,
+    @Param('jornadaIndex') jornadaIndex: number,
+    @Body() updateData: UpdateJornadaDto,
+  ) {
+    return this.matchService.updateJornada(
+      matchId,
+      Number(jornadaIndex),
+      updateData,
+    );
+  }
+
+  @Get('group/:groupId/jornada/:jornadaNum')
+  @ApiOperation({ summary: 'Obtener matches por grupo y número de jornada' })
+  @ApiParam({ name: 'groupId', description: 'ID del grupo' })
+  @ApiParam({ name: 'jornadaNum', description: 'Número de jornada' })
+  @ApiResponse({
+    status: 200,
+    description: 'Matches de la jornada encontrados',
+    type: [Match],
+  })
+  @ApiResponse({ status: 404, description: 'No se encontraron matches' })
+  async getJornadaByGroup(
+    @Param('groupId') groupId: string,
+    @Param('jornadaNum') jornadaNum: number,
+  ): Promise<Match[]> {
+    return this.matchService.getJornadaByGroup(groupId, Number(jornadaNum));
   }
 }

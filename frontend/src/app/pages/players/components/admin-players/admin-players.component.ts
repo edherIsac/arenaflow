@@ -78,4 +78,12 @@ export class AdminPlayersComponent implements OnInit {
       this.filterPlayers();
     }
   }
+
+  goBack(): void {
+    this.router.navigate(['/tournaments']); // Or the appropriate previous route
+  }
+
+  navigateToTournaments(): void {
+    this.router.navigate(['/tournaments']); // Adjust the route as needed
+  }
 }

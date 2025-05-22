@@ -1,9 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 interface Player {
+  id?: number;
   nombre: string;
   apellido: string;
+  documento: string;
   posicion: string;
   foto?: string;
 }
@@ -16,7 +21,7 @@ interface Player {
 export class TeamFormComponent {
   teamForm: FormGroup;
   logoFile: File | null = null;
-  logoPreview: string | ArrayBuffer | null = null;
+  logoPreview: string | undefined = undefined;
 
   @ViewChild('logoInputRef') logoInputRef!: ElementRef<HTMLInputElement>;
 
@@ -26,21 +31,27 @@ export class TeamFormComponent {
   // Lista de categorías de ejemplo
   categories: string[] = ['Infantil', 'Juvenil', 'Libre', 'Femenil', 'Veteranos'];
 
-  players: Player[] = [
-    { nombre: 'Juan', apellido: 'Pérez', posicion: 'Delantero', foto: '' },
-    { nombre: 'Luis', apellido: 'García', posicion: 'Portero', foto: '' }
-  ];
+  // Lista de jugadores en el equipo
+  players: Player[] = [];
+  
+  // Estado del modal
+  isModalVisible: boolean = false;
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    // Configurar el formulario del equipo
     this.teamForm = this.fb.group({
       name: ['', [Validators.required]],
       category: ['', [Validators.required]]
     });
+    
   }
-
-  triggerLogoInput() {
-    const logoInput = document.getElementById('logoInput') as HTMLInputElement;
-    if (logoInput) logoInput.click();
+  
+  handleModalClose(): void {
+    this.isModalVisible = false;
   }
 
   onLogoChange(event: Event) {
@@ -49,52 +60,46 @@ export class TeamFormComponent {
       this.logoFile = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        this.logoPreview = reader.result;
+        if (typeof reader.result === 'string') {
+          this.logoPreview = reader.result;
+        }
       };
-      reader.readAsDataURL(this.logoFile);
+      if (this.logoFile) {
+        reader.readAsDataURL(this.logoFile);
+      }
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/teams/admin']);
   }
 
   onAddPlayer() {
-    const nombre = prompt('Nombre del jugador:');
-    const apellido = prompt('Apellido del jugador:');
-    const posicion = prompt('Posición:');
-    // Simulación: en un modal real, permitir subir foto
-    if (nombre && apellido && posicion) {
-      this.players.push({ nombre, apellido, posicion, foto: '' });
-    }
+    this.isModalVisible = true;
   }
-
+  
   onEditPlayer(index: number) {
-    const player = this.players[index];
-    const nombre = prompt('Nuevo nombre:', player.nombre) || player.nombre;
-    const apellido = prompt('Nuevo apellido:', player.apellido) || player.apellido;
-    const posicion = prompt('Nueva posición:', player.posicion) || player.posicion;
-    // Simulación: en un modal real, permitir cambiar foto
-    this.players[index] = { ...player, nombre, apellido, posicion };
+    console.log('Editar jugador', index);
   }
-
+  
   onDeletePlayer(index: number) {
-    if (confirm('¿Seguro que deseas eliminar este jugador?')) {
-      this.players.splice(index, 1);
-    }
+    console.log('Eliminar jugador', index);
   }
-
+  
   onExportCredentials() {
-    alert('Funcionalidad de exportar credenciales próximamente.');
+    console.log('Exportando credenciales del equipo');
   }
 
-  onSubmit() {
-    if (this.teamForm.valid) {
-      const formData = new FormData();
-      formData.append('name', this.teamForm.value.name);
-      formData.append('category', this.teamForm.value.category);
-      if (this.logoFile) {
-        formData.append('logo', this.logoFile);
-      }
-      console.log('Equipo:', this.teamForm.value);
-      console.log('Logo:', this.logoFile);
-      console.log('Jugadores:', this.players);
-    }
+  onSelectPlayer(player: any){
+    console.log('Seleccionado jugador', player);
+    this.isModalVisible = false;
+    this.players.push({
+      nombre: player.firstName,
+      apellido: player.lastName,
+      documento: '',
+      posicion: player.position,
+      foto: ''
+    });
   }
 }
+

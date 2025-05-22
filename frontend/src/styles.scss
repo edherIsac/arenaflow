@@ -2,3 +2,179 @@
 *{
     margin: 0;
 }
+
+/* Dislogos y toast libreria con DOM en servicio inyectable */
+
+@keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes fadeOutScale {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s forwards;
+  }
+  
+  .dialog {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 0.3s forwards;
+  }
+  
+  .closing {
+    animation: fadeOutScale 0.3s forwards;
+  }
+  
+  .closing-2 {
+    animation: fadeOut 0.3s forwards;
+  }
+  
+  .btn_container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .dialog_message {
+    font-size: 16px;
+    color: #04214e;
+    font-weight: bold;
+  }
+  
+  .icon-dialog-info{
+    font-size: 56px;
+    color: #94afe0;
+  }
+  
+  
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .toast {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
+    border-radius: 2px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+  
+  .show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+  .hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  
+  .toast p{
+    font-size: 14px;
+    color: #04214e;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .icon-toast-success{
+    font-size: 28px;
+    color: #7ec570;
+  }
+  /* **************************************************** */
+
+  .btn {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    height: fit-content;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    // font-family: Arial, sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .save {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+  
+  .save:hover {
+    background: #bbdefb;
+    box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+  }
+  
+  .delete {
+    background: #fbe9e7;
+    color: #d32f2f;
+  }
+  
+  .delete:hover {
+    background: #ffccbc;
+    box-shadow: 0 2px 4px rgba(211, 47, 47, 0.3);
+  }

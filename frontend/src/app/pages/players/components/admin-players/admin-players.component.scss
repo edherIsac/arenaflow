@@ -2,17 +2,62 @@
   min-height: 100vh;
   width: 100%;
 //   background: linear-gradient(135deg, #4e91d8 0%, #b243ce 100%);
-  background-color: #7474d4;
+  background-color: #f7f7fc;
   color: #f7f7fc;
   font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
   position: relative;
   padding: 2.2rem;
   box-sizing: border-box;
 
-  .team-admin-header {
+  .navigation-buttons {
     display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
     justify-content: space-between;
-    align-items: center;
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      i {
+        font-size: 0.9rem;
+      }
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+    
+    .btn-back {
+      background: #f0f2f5;
+      color: #4e91d8;
+      border: 1px solid #d0d7de;
+      
+      &:hover {
+        background: #e6ebf1;
+      }
+    }
+    
+    .btn-tournaments {
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      
+      &:hover {
+        background: linear-gradient(90deg, #5a0cb0 0%, #1a65e0 100%);
+      }
+    }
+  }
+
+  .team-admin-header {
     margin-bottom: 2rem;
     padding-bottom: 1.7rem;
     border-radius: 0;
@@ -21,13 +66,13 @@
     box-shadow: none;
     border-bottom: 1.5px solid #ececec;
 
-    h2 {
-      margin: 0;
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-shadow: none;
-      color: #2c3e50;
+      h2 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: none;
+        color: #2c3e50;
     }
 
     .btn-add-player {
@@ -41,6 +86,7 @@
       box-shadow: 0 2px 8px rgba(80, 0, 150, 0.08);
       transition: background 0.2s, transform 0.2s;
       text-decoration: none;
+      flex-shrink: 0;
 
       &:hover {
         transform: translateY(-2px);

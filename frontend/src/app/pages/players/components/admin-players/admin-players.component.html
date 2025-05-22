@@ -1,7 +1,15 @@
 <div class="admin-players-container">
   <div class="team-admin-header">
     <h2>Administración de Jugadores</h2>
+  </div>
+
+  <div class="navigation-buttons">
+    <button class="btn-back" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i>
+      Volver
+    </button>
     <button class="btn-add-player" (click)="navigateToPlayerForm()">
+      <i class="fas fa-plus"></i>
       Agregar Jugador
     </button>
   </div>
@@ -9,7 +17,11 @@
   <div class="players-grid">
     <div *ngFor="let player of filteredPlayers" class="player-card">
       <div class="player-card-header">
-        <img [src]="player.photo || 'assets/default-player.png'" alt="{{ player.name }} {{ player.lastName }}" class="player-avatar">
+        <img
+          [src]="player.photo || 'assets/default-player.png'"
+          alt="{{ player.name }} {{ player.lastName }}"
+          class="player-avatar"
+        />
         <div class="player-info">
           <h3>{{ player.name }} {{ player.lastName }}</h3>
           <p>{{ player.position }}</p>

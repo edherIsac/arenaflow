@@ -1,0 +1,96 @@
+<div class="search-player-container">
+ 
+  <div class="search-header">
+    <!-- <h2>Buscar Jugadores</h2> -->
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        (keyup.enter)="searchPlayers()" 
+        placeholder="Buscar por nombre, apellido o correo..."
+        class="search-input"
+      >
+      <button (click)="searchPlayers()" class="search-button">
+        <i class="fas fa-search"></i> Buscar
+      </button>
+    </div>
+  </div>
+
+  <!-- <div class="search-filters">
+    <div class="filter-group">
+      <label for="sport">Deporte:</label>
+      <select id="sport" [(ngModel)]="selectedSport" class="filter-select">
+        <option value="">Todos los deportes</option>
+        <option *ngFor="let sport of sports" [value]="sport.id">{{sport.name}}</option>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <label for="position">Posición:</label>
+      <select id="position" [(ngModel)]="selectedPosition" class="filter-select">
+        <option value="">Cualquier posición</option>
+        <option *ngFor="let position of positions" [value]="position.id">{{position.name}}</option>
+      </select>
+    </div>
+  </div> -->
+
+  <div class="players-grid" *ngIf="players.length > 0; else noResults">
+    <div class="player-card" *ngFor="let player of players">
+      <div class="player-avatar">
+        <img [src]="player.avatar || 'assets/images/default-avatar.png'" [alt]="player.name">
+      </div>
+      <div class="player-info">
+        <h3>{{player.firstName}} {{player.lastName}}</h3>
+        <p class="player-position">{{player.position}}</p>
+        <div class="player-stats">
+          <div class="stat">
+            <i class="fas fa-trophy"></i>
+            <span>Victorias: {{player.stats.wins}}</span>
+          </div>
+          <div class="stat">
+            <i class="fas fa-futbol"></i>
+            <span>Goles: {{player.stats.goals}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="player-actions">
+        <button (click)="openModal(player)" class="btn-view">
+          <i class="fas fa-eye"></i> Ver
+        </button>
+        <button (click)="addToTeam(player)" [disabled]="isPlayerInTeam(player)" class="btn-add">
+          <i class="fas fa-plus"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="no-results" *ngIf="hasSearched">
+      <i class="fas fa-search"></i>
+      <p>No se encontraron jugadores que coincidan con tu búsqueda.</p>
+    </div>
+    <div class="initial-state" *ngIf="!hasSearched">
+      <i class="fas fa-users"></i>
+      <p>Busca jugadores para agregar a tu equipo</p>
+    </div>
+  </ng-template>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+      <i class="fas fa-chevron-left"></i> Anterior
+    </button>
+    <span>Página {{currentPage}} de {{totalPages}}</span>
+    <button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      Siguiente <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<app-modal
+  [title]="'Asignacion de Jugador'"
+  [(isVisible)]="isModalVisible"
+  [closeOnBackdrop]="true"
+  (onClose)="handleModalClose()"
+>
+<app-player-details></app-player-details>
+</app-modal>

@@ -1,107 +1,125 @@
-<div class="margin-2">
-  <div class="team-admin-header">
-    <h2>Gestión de Jornadas</h2>
+<div class="container">
+  <!-- <div class="calendar-header">
+    <h2>Calendario de Partidos</h2>
+    <p>Gestiona los partidos y jornadas de la temporada</p>
+  </div> -->
+  <div class="matchs-admin-header">
+    <h2>Administración de Partidos</h2>
   </div>
-  <div class="category-select-container">
-    <label>Categoría</label>
-    <select>
-      <option>Femenil</option>
-      <option>Reservas</option>
-      <option>Especiales</option>
-      <option>Premier</option>
-    </select>
-  </div>
-  <div class="calendar-container">
-    <!-- <h1 class="calendar-title">Calendario de Partidos</h1> -->
-  
-    <!-- Selector de Categoría -->
+  <div class="filtros-container">
+    <!-- Header -->
     
   
-    <!-- Tabs de Grupos -->
-    <nav class="group-tabnav">
-      <button class="group-tab active">Grupo A</button>
-      <button class="group-tab">Grupo B</button>
-      <button class="group-tab">Grupo Único</button>
-    </nav>
+    <!-- Category and Group Selectors -->
+    <div class="selectors-container">
+      <div class="category-selector">
+        <label for="category">Categoría:</label>
+        <select id="category" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange()">
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
   
-    <!-- Control de Jornadas -->
-    <div class="round-control">
-      <button>Jornada Anterior</button>
-      <span>Jornada 1</span>
-      <button>Siguiente Jornada</button>
+      <div class="group-selector" *ngIf="groups.length > 0">
+        <label for="group">Grupo:</label>
+        <select id="group" [(ngModel)]="selectedGroupId" (change)="onGroupChange()">
+          <option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</option>
+        </select>
+      </div>
     </div>
   
-    <!-- Lista de Partidos -->
-  <div class="matches-list">
-    <div class="match-item">
-      <div class="match-teams">
-        <div class="team home-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 1">
-          <span>Equipo 1</span>
-        </div>
-        <div class="match-score">vs</div>
-        <div class="team away-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 2">
-          <span>Equipo 2</span>
-        </div>
-      </div>
-      <div class="match-details">
-        <div class="match-date">15 May 2024</div>
-        <div class="match-time">16:00</div>
-        <div class="match-venue">Estadio Principal</div>
-      </div>
-      <div class="match-actions">
-        <button class="edit-match">Editar</button>
-      </div>
-    </div>
-    <div class="match-item">
-      <div class="match-teams">
-        <div class="team home-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 3">
-          <span>Equipo 3</span>
-        </div>
-        <div class="match-score">vs</div>
-        <div class="team away-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 4">
-          <span>Equipo 4</span>
-        </div>
-      </div>
-      <div class="match-details">
-        <div class="match-date">15 May 2024</div>
-        <div class="match-time">16:00</div>
-        <div class="match-venue">Estadio Principal</div>
-      </div>
-      <div class="match-actions">
-        <button class="edit-match">Editar</button>
-      </div>
-    </div>
-    <div class="match-item">
-      <div class="match-teams">
-        <div class="team home-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 5">
-          <span>Equipo 5</span>
-        </div>
-        <div class="match-score">vs</div>
-        <div class="team away-team">
-          <img src="assets/img/equipo1.png" alt="Equipo 6">
-          <span>Equipo 6</span>
-        </div>
-      </div>
-      <div class="match-details">
-        <div class="match-date">15 May 2024</div>
-        <div class="match-time">16:00</div>
-        <div class="match-venue">Estadio Principal</div>
-      </div>
-      <div class="match-actions">
-        <button class="edit-match">Editar</button>
-      </div>
-    </div>
+    <!-- Calendar Content -->
+    
   </div>
   
-    <!-- Botón para generar calendario -->
-    <div class="generate-schedule-container">
-      <button>Generar Calendario de Partidos</button>
+  <div class="calendar-content" *ngIf="selectedGroupId">
+    <!-- Round Navigation -->
+    <div class="round-navigation">
+      <button class="nav-button" (click)="previousRound()" [disabled]="currentRound === 1">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <h3>Jornada {{ currentRound }}</h3>
+      <button class="nav-button" (click)="nextRound()" [disabled]="currentRound === totalRounds">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  
+    <!-- Matches List -->
+    <div class="matches-container" *ngIf="currentMatches.length > 0; else noMatches">
+      <div class="match-card" *ngFor="let match of currentMatches">
+        <div class="match-teams">
+          <div class="team home-team">
+            <div class="team-logo">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <span class="team-name">{{ getTeamName(match.homeTeamId) }}</span>
+          </div>
+          
+          <div class="match-vs">VS</div>
+          
+          <div class="team away-team">
+            <span class="team-name">{{ getTeamName(match.awayTeamId) }}</span>
+            <div class="team-logo">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="match-details">
+          <div class="match-date">
+            <i class="far fa-calendar-alt"></i>
+            {{ match.date | date:'mediumDate' }}
+          </div>
+          <div class="match-time">
+            <i class="far fa-clock"></i>
+            {{ match.time }}
+          </div>
+          <div class="match-venue">
+            <i class="fas fa-map-marker-alt"></i>
+            {{ match.venue }}
+          </div>
+        </div>
+        
+        <div class="match-actions">
+          <button class="action-button edit" title="Editar partido" (click)="editMatch(match)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="action-button delete" title="Eliminar partido">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Matches Template -->
+    <ng-template #noMatches>
+      <div class="no-matches">
+        <div class="no-matches-content">
+          <i class="fas fa-calendar-plus"></i>
+          <h3>No hay partidos programados</h3>
+          <p>Parece que aún no hay partidos programados para esta categoría y grupo.</p>
+          <button class="generate-button" (click)="generateCalendar()">
+            <i class="fas fa-magic"></i> Generar Calendario
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  
+  <!-- Generate Calendar Button (when no group selected) -->
+  <div class="no-group-selected" *ngIf="!selectedGroupId && groups.length > 0">
+    <div class="no-group-content">
+      <i class="fas fa-folder-open"></i>
+      <h3>Selecciona un grupo</h3>
+      <p>Por favor, selecciona un grupo para ver o gestionar su calendario.</p>
     </div>
   </div>
 </div>
 
+<app-modal
+  [title]="'Formulario de Partido'"
+  [(isVisible)]="isModalVisible"
+  [closeOnBackdrop]="true"
+  (onClose)="handleModalClose()"
+>
+  <app-form-date-match></app-form-date-match>
+</app-modal>

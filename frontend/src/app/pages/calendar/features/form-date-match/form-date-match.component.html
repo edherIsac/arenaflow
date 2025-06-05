@@ -1,0 +1,233 @@
+<div class="match-result-container">
+  <!-- Match Header -->
+  <div class="match-header">
+    <h2>Resultado del Partido</h2>
+    <p class="match-date">{{matchDate | date:'fullDate'}}</p>
+  </div>
+
+  <!-- Teams Score -->
+  <div class="teams-score">
+    <div class="team home-team">
+      <div class="team-logo">
+        <img [src]="homeTeam.logo || 'assets/images/team-logo-placeholder.png'" [alt]="homeTeam.name">
+      </div>
+      <h3>{{homeTeam.name}}</h3>
+      <div class="score-controls">
+        <button class="score-btn" (click)="onScoreChange('home', false)">-</button>
+        <span class="score">{{homeTeam.score || 0}}</span>
+        <button class="score-btn" (click)="onScoreChange('home', true)">+</button>
+      </div>
+    </div>
+
+    <div class="vs-separator">VS</div>
+
+    <div class="team away-team">
+      <div class="team-logo">
+        <img [src]="awayTeam.logo || 'assets/images/team-logo-placeholder.png'" [alt]="awayTeam.name">
+      </div>
+      <h3>{{awayTeam.name}}</h3>
+      <div class="score-controls">
+        <button class="score-btn" (click)="onScoreChange('away', false)">-</button>
+        <span class="score">{{awayTeam.score || 0}}</span>
+        <button class="score-btn" (click)="onScoreChange('away', true)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Players Stats -->
+  <div class="players-stats">
+    <!-- Home Team Players -->
+    <div class="team-players">
+      <h3 class="team-title">{{homeTeam.name}} - Jugadores</h3>
+      
+      <!-- Starters -->
+      <h4 class="players-section-title">
+        <span class="material-icons">person</span>
+        Titulares
+      </h4>
+      <div class="players-list">
+        <div *ngFor="let player of homeTeam.players | filterPlayers:true" class="player-card">
+          <div class="player-info">
+            <span class="player-number">{{player.number}}</span>
+            <span class="player-name">{{player.name}}</span>
+          </div>
+          <div class="player-actions">
+            <button 
+              class="action-btn goal" 
+              [class.active]="player.goals > 0"
+              (click)="onPlayerEvent(player.id, 'goal')"
+              matTooltip="Gol"
+            >
+              <span class="material-icons">sports_soccer</span>
+              <span class="event-count" *ngIf="player.goals > 0">{{ player.goals }}</span>
+            </button>
+            <button 
+              class="action-btn yellow" 
+              [class.active]="player.yellowCards > 0"
+              (click)="onPlayerEvent(player.id, 'yellow')"
+              [disabled]="player.redCard"
+              matTooltip="Tarjeta Amarilla"
+            >
+              <span class="material-icons">warning</span>
+              <span class="event-count" *ngIf="player.yellowCards > 0">{{ player.yellowCards }}</span>
+            </button>
+            <button 
+              class="action-btn red" 
+              [class.active]="player.redCard"
+              (click)="onPlayerEvent(player.id, 'red')"
+              matTooltip="Tarjeta Roja"
+            >
+              <span class="material-icons">block</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Substitutes -->
+      <h4 class="players-section-title">
+        <span class="material-icons">people_alt</span>
+        Suplentes
+      </h4>
+      <div class="players-list">
+        <div *ngFor="let player of homeTeam.players | filterPlayers:false" class="player-card">
+          <div class="player-info">
+            <span class="player-number">{{player.number}}</span>
+            <span class="player-name">{{player.name}}</span>
+          </div>
+          <div class="player-actions">
+            <button 
+              class="action-btn goal" 
+              [class.active]="player.goals > 0"
+              (click)="onPlayerEvent(player.id, 'goal')"
+              matTooltip="Gol"
+            >
+              <span class="material-icons">sports_soccer</span>
+              <span class="event-count" *ngIf="player.goals > 0">{{ player.goals }}</span>
+            </button>
+            <button 
+              class="action-btn yellow" 
+              [class.active]="player.yellowCards > 0"
+              (click)="onPlayerEvent(player.id, 'yellow')"
+              [disabled]="player.redCard"
+              matTooltip="Tarjeta Amarilla"
+            >
+              <span class="material-icons">warning</span>
+              <span class="event-count" *ngIf="player.yellowCards > 0">{{ player.yellowCards }}</span>
+            </button>
+            <button 
+              class="action-btn red" 
+              [class.active]="player.redCard"
+              (click)="onPlayerEvent(player.id, 'red')"
+              matTooltip="Tarjeta Roja"
+            >
+              <span class="material-icons">block</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Away Team Players -->
+    <div class="team-players">
+      <h3 class="team-title">{{awayTeam.name}} - Jugadores</h3>
+      
+      <!-- Starters -->
+      <h4 class="players-section-title">
+        <span class="material-icons">person</span>
+        Titulares
+      </h4>
+      <div class="players-list">
+        <div *ngFor="let player of awayTeam.players | filterPlayers:true" class="player-card">
+          <div class="player-info">
+            <span class="player-number">{{player.number}}</span>
+            <span class="player-name">{{player.name}}</span>
+          </div>
+          <div class="player-actions">
+            <button 
+              class="action-btn goal" 
+              [class.active]="player.goals > 0"
+              (click)="onPlayerEvent(player.id, 'goal')"
+              matTooltip="Gol"
+            >
+              <span class="material-icons">sports_soccer</span>
+              <span class="event-count" *ngIf="player.goals > 0">{{ player.goals }}</span>
+            </button>
+            <button 
+              class="action-btn yellow" 
+              [class.active]="player.yellowCards > 0"
+              (click)="onPlayerEvent(player.id, 'yellow')"
+              [disabled]="player.redCard"
+              matTooltip="Tarjeta Amarilla"
+            >
+              <span class="material-icons">warning</span>
+              <span class="event-count" *ngIf="player.yellowCards > 0">{{ player.yellowCards }}</span>
+            </button>
+            <button 
+              class="action-btn red" 
+              [class.active]="player.redCard"
+              (click)="onPlayerEvent(player.id, 'red')"
+              matTooltip="Tarjeta Roja"
+            >
+              <span class="material-icons">block</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Substitutes -->
+      <h4 class="players-section-title">
+        <span class="material-icons">people_alt</span>
+        Suplentes
+      </h4>
+      <div class="players-list">
+        <div *ngFor="let player of awayTeam.players | filterPlayers:false" class="player-card">
+          <div class="player-info">
+            <span class="player-number">{{player.number}}</span>
+            <span class="player-name">{{player.name}}</span>
+          </div>
+          <div class="player-actions">
+            <button 
+              class="action-btn goal" 
+              [class.active]="player.goals > 0"
+              (click)="onPlayerEvent(player.id, 'goal')"
+              matTooltip="Gol"
+            >
+              <span class="material-icons">sports_soccer</span>
+              <span class="event-count" *ngIf="player.goals > 0">{{ player.goals }}</span>
+            </button>
+            <button 
+              class="action-btn yellow" 
+              [class.active]="player.yellowCards > 0"
+              (click)="onPlayerEvent(player.id, 'yellow')"
+              [disabled]="player.redCard"
+              matTooltip="Tarjeta Amarilla"
+            >
+              <span class="material-icons">warning</span>
+              <span class="event-count" *ngIf="player.yellowCards > 0">{{ player.yellowCards }}</span>
+            </button>
+            <button 
+              class="action-btn red" 
+              [class.active]="player.redCard"
+              (click)="onPlayerEvent(player.id, 'red')"
+              matTooltip="Tarjeta Roja"
+            >
+              <span class="material-icons">block</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="form-actions">
+    <button class="btn btn-secondary" (click)="onCancel()">
+      <span class="material-icons">close</span>
+      <span>Cancelar</span>
+    </button>
+    <button class="btn btn-primary" (click)="onSubmit()">
+      <span class="material-icons">save</span>
+      <span>Guardar Resultado</span>
+    </button>
+  </div>
+</div>

@@ -29,8 +29,19 @@ export class AdminPlayersComponent implements OnInit {
     { id: 7, name: 'Sofía', lastName: 'Ramírez', team: 'Tigres', position: 'Mediocampista', birthDate: '1996-02-14', height: 168, weight: 62, photo: 'https://randomuser.me/api/portraits/women/3.jpg' },
     { id: 8, name: 'Diego', lastName: 'Hernández', team: 'Pumas', position: 'Defensa', birthDate: '1989-06-30', height: 188, weight: 82, photo: 'https://randomuser.me/api/portraits/men/5.jpg' }
   ];
+  
   filteredPlayers: Player[] = [];
   searchTerm: string = '';
+  selectedTeam: string = '';
+  selectedPosition: string = '';
+  
+  get teams(): string[] {
+    return [...new Set(this.players.map(player => player.team))].sort();
+  }
+  
+  get positions(): string[] {
+    return [...new Set(this.players.map(player => player.position))].sort();
+  }
 
   constructor(private router: Router) { }
 
@@ -43,17 +54,29 @@ export class AdminPlayersComponent implements OnInit {
   }
 
   filterPlayers(): void {
-    if (!this.searchTerm) {
-      this.filteredPlayers = this.players;
-    } else {
-      const term = this.searchTerm.toLowerCase();
-      this.filteredPlayers = this.players.filter(player => 
-        player.name.toLowerCase().includes(term) ||
-        player.lastName.toLowerCase().includes(term) ||
-        player.team.toLowerCase().includes(term) ||
-        player.position.toLowerCase().includes(term)
-      );
-    }
+    this.filteredPlayers = this.players.filter(player => {
+      // Filtro por búsqueda
+      const matchesSearch = !this.searchTerm || 
+        player.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        player.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        player.team.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        player.position.toLowerCase().includes(this.searchTerm.toLowerCase());
+      
+      // Filtro por equipo
+      const matchesTeam = !this.selectedTeam || player.team === this.selectedTeam;
+      
+      // Filtro por posición
+      const matchesPosition = !this.selectedPosition || player.position === this.selectedPosition;
+      
+      return matchesSearch && matchesTeam && matchesPosition;
+    });
+  }
+  
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.selectedTeam = '';
+    this.selectedPosition = '';
+    this.filterPlayers();
   }
 
   calculateAge(birthDate: string): number {
